@@ -40,7 +40,7 @@ export default function PasswordLab() {
     try {
       // ========== SEND REQUEST TO BACKEND ==========
       // fetch() makes an HTTP request to our backend API
-      const response = await fetch('http://localhost:5000/api/signup', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/signup`, {
         method: 'POST',  // POST = sending data to create something new
         headers: { 'Content-Type': 'application/json' },  // Tell server we're sending JSON
         body: JSON.stringify({ username, password })  // Convert data to JSON format
@@ -84,7 +84,7 @@ export default function PasswordLab() {
     
     try {
       // ========== SEND REQUEST TO BACKEND ==========
-      const response = await fetch('http://localhost:5000/api/login', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
