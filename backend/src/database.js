@@ -1,10 +1,10 @@
 // This is like creating a "phone line" to talk to your database
 const pool = new Pool({
-  user: 'postgres',              // Database username (default is 'postgres')
-  host: 'localhost',             // Where the database is (localhost = your computer)
-  database: 'password_lab',      // Name of the specific database we're using
-  password: '#Admin123#',     // Your PostgreSQL password (CHANGE THIS!)
-  port: 5432,                    // PostgreSQL's default port number
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 // Function to create the users table in the database
