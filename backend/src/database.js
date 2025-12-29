@@ -1,4 +1,6 @@
-// This is like creating a "phone line" to talk to your database
+const { Pool } = require('pg');
+
+// Database connection
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -7,31 +9,23 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-// Function to create the users table in the database
-// This runs when the server starts to make sure the table exists
+// Create users table if it doesn't exist
 const createTable = async () => {
-  // SQL query to create the table
-  // IF NOT EXISTS means "only create if it doesn't already exist"
   const query = `
     CREATE TABLE IF NOT EXISTS users (
-      id SERIAL PRIMARY KEY,                    -- Auto-incrementing ID for each user
-      username VARCHAR(50) UNIQUE NOT NULL,     -- Username (max 50 chars, must be unique)
-      password_hash VARCHAR(255) NOT NULL,      -- Hashed password (NOT the actual password!)
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- When the account was created
+      id SERIAL PRIMARY KEY,
+      username VARCHAR(50) UNIQUE NOT NULL,
+      password_hash VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `;
   
-  // Try to run the query
   try {
-    await pool.query(query);  // Execute the SQL query
+    await pool.query(query);
     console.log('✅ Users table ready!');
   } catch (err) {
-    // If something goes wrong, log the error
     console.error('❌ Error creating table:', err);
   }
 };
 
-// Export these so other files can use them
-// pool = used to run database queries
-// createTable = used to set up the table when server starts
 module.exports = { pool, createTable };
